@@ -1,6 +1,7 @@
 ---
 layout: splash
 permalink: /
+title: TFM - Nacho Condés (2019)
 header:
   overlay_color: "#5e616c"
   overlay_image: /assets/images/cover/peloto_texto.png
@@ -8,7 +9,7 @@ header:
     #- label: "<i class='fas fa-download'></i> Install now"
     #  url: "/installation/"
 excerpt: 
-  Write your doc title here
+  "Working at the moment on ___Person following behavioral using Deep Learning___ (TFG II: The Revenge)."
 feature_row:
   - image_path: /assets/images/cover/logbook.jpg
     alt: "Logbook"
@@ -40,12 +41,10 @@ youTube_id: ID7qaEcIu4k
 
 Hello, everybody.
 
-You can write an introduction about the work you are going to do, links, something about yourself, etc.
+This website is devoted to serve as a follow-up mean for my for the End on Master's Degree (spanish TFM).
 
-In the `README.md` file at the root of the project are the steps to replicate the Minimal mistakes template on your local machine. This way you don't need to upload it to GitHub to be represented until it's ready.
+Currently, I'm focused on an expansion of the TFG work I delivered two years ago, so we are still actively working on that GitHub repository, [have a look!](https://github.com/RoboticsLabURJC/2017-tfg-nacho_condes)
 
-Uploading content to GitHub automatically displays your documentation in the link with a structure of the type:
+Please notice that, as it is under active development, it might be unstable when trying to use it. So, we created beforehand [a release encompassing the last stable version](https://github.com/RoboticsLabURJC/2017-tfg-nacho_condes/releases/tag/TFG). You can work on it without functional issues!
 
-```
-https://github_user_name.github.io/repository_name/
-```
+Feel free to reach me on [email](mailto:nachocmstrato@gmail.com) for any further concerns.
