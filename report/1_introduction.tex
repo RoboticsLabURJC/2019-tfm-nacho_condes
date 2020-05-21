@@ -1,0 +1,16 @@
+\chapter{Introduction}
+\section{Motivation}
+	This work is focused on exploring the synergy between two science fields, which are outstanding nowadays: \textit{robotics} and \textit{deep learning}. These are combined for obtaining a robust system capable of following a certain person navigating towards it on a reactive behavioral. This behavioral is composed of two main components: the \textit{perception block}, responsible of processing the images from an RGB-D sensor placed on the system, and the \textit{actuation block}, which moves the robotic base accordingly to the relative position of the person to be followed.\\
+	
+	The original idea was proposed on \cite{tfg}, where a neural following system was developed to be run in a standard laptop into which the camera and the robot were plugged. In the following dissertation, we will revisit this work and describe the points of interest which have allowed to enhance the previous version of this work.\\
+	
+	The key aspects of this project are included in its title, and can be brought in as follows:
+	\begin{description}
+		\item[Embedded system] the system is composed of a battery-powered robot, on a \textit{mobile base} form factor.
+	\end{description}
+	
+	%	Este proyecto describe el proceso de desarrollo del sistema enunciado en el título, que condensa los puntos clave que conforman la novedad con la que justificamos el mismo:
+	%- Embedded, ya que está compuesto de un robot alimentado por una batería, que soporta una placa portátil de desarrollo. Esta placa implementa algoritmos de manera totalmente local, ofreciendo una monitorización inalámbrica del funcionamiento del sistema.
+	%- Person identification, combinamos de manera secuencial 3 redes neuronales que realizan inferencias sobre las imágenes percibidas por la cámara RGB-D incorporada en el robot. Este sistema combinado permite detectar a las diferentes personas presentes en la escena, así como discernir entre estas mediante un signo de identidad como es la cara.
+	%- Tracking, ya que incorpora un seguimiento probabilístico basado en sistemas dinámicos. Esto se aprovecha de las trayectorias que mantienen las personas al moverse por el campo visual del robot, así como de la distancia relativa del robot a cada una de estas, gracias al sensor óptico de profundidad incorporado. Este sistema provee una robustez extra del sistema frente a posibles pérdidas totales o parciales de la persona, ante las cuales las inferencias neuronales no serían suficientes para mantener un control estable sobre el robot.
+	
