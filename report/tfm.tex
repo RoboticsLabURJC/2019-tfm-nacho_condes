@@ -48,6 +48,7 @@ hmargin=3cm
 % EXPRESIONES MATEMATICAS
 \usepackage{amsmath,amssymb,amsfonts,amsthm}
 \usepackage{subcaption}
+\usepackage[super]{nth}
 \usepackage{txfonts} 
 \usepackage[T1]{fontenc}
 \usepackage[utf8]{inputenc}
@@ -184,6 +185,7 @@ hmargin=3cm
 	keywordstyle=\bfseries,
 	stringstyle=\ttfamily,
 	showstringspaces = false,
+	comment=[l]{\#},
 	commentstyle=\color{gray45},     
 	%
 	numbers=left,
@@ -355,7 +357,8 @@ yes
 \pagenumbering{arabic} % numeración con números arábigos para el resto de la publicación	
 
 \include{1_introduction}
-%\include{2_materials_methods}
+\include{2_materials_methods}
+\include{3_results}
 %----------
 %	BIBLIOGRAFÍA
 %----------	
