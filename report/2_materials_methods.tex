@@ -117,7 +117,7 @@ As well as in the Python case, the version of ROS used on \cite{tfg} reached its
 
 
 \subsection{OpenCV}
-For general image processing, OpenCV (\emph{Open Source Computer Vision}) is a C++/Python/Java open-source library (natively written in C++) for Computer Vision purposes. Among the classic/\emph{state-of-the-art} methods it bundles, we can find functions suitable for face recognition, image stitching, eye tracking, establishing markers for augmented reality, etc.\\
+For general image processing, OpenCV (\emph{Open Source Computer Vision}) is a C++/Python/Java open-source library (natively written in C++) for Computer Vision purposes. Among the classic/\emph{state-of-the-art} methods it bundles, several functions can be found, suitable for face recognition, image stitching, eye tracking, computing homographies, establishing markers for augmented reality, etc.\\
 
 Its general focus centers in \emph{efficiency and real-time functionality}, thank to low-level optimizations on the system hardware (i.e. integration with NVIDIA CUDA and OpenCL GPU processing libraries). Thus, the excellent performance achieved by this open source library has turned it into the \emph{de facto} standard between every kind of users (from researchers to big companies or even governmental bodies, as their website stands\footnote{\url{https://opencv.org/}}).\\
 
@@ -176,7 +176,7 @@ On the other hand, the received images are passed through an ensemble of neural 
 	
 	\item \textbf{Face detection:} as in the previous point, the problem can be addressed using an object detection neural network. However, the previously deployed models are not capable of detecting faces. As the system is power-limited, looking for another multi-class model could be considered as an overshooting solution that the system is not able to handle at the same time the other model is deployed. Thus, one feasible solution is to use a single-class detection system. The network trained in \cite{faced} implements a two-stage neural network capable of detecting faces. As it was depicted in \autoref{sec:1_sota}, this detector is based on YOLO, which ensures a high-speed and efficient detection deployed using a class-specific neural network, which is way lighter than a multi-class detection system. The repository where the project is hosted contains a video sequence comparison comparing the precision of this system against a classical Haar cascade approach \cite{violajones}.  Chapter \ref{chap:3_results} contains captions of this sequence to show the superior performance for the face detection issue.
 	
-	\item \textbf{Face identification:} Once the face of a person has been retrieved, it can be used as a distinguishing feature for determining their identity. As the basis of this work is to take advantage of deep learning power, a neural system has been selected to perform this task. For this purpose, \textit{FaceNet} (described on \autoref{sec:1_facenet}) has been deployed in order to perform identification, using a publicly available implementation in TensorFlow\footnote{\url{https://github.com/davidsandberg/facenet}}. As a result, we can transform the image of a face into a 128-dimensional vector: its projection or \textit{embedding}. This transformation is learned after a triplet-loss training process, which separates different faces as much as possible, while projecting similar faces as close as possible. As it can be seen on \autoref{fig:1_faces_poses}, we can use this method to obtain similar projections when two images of the same face are evaluated, despite different lighting conditions (as a channel-wise normalization step is performed before passing the image through the network).
+	\item \textbf{Face identification:} Once the face of a person has been retrieved, it can be used as a distinguishing feature for determining their identity. As the basis of this work is to take advantage of deep learning power, a neural system has been selected to perform this task. For this purpose, \textit{FaceNet} (described on \autoref{sec:1_facenet}) has been deployed in order to perform identification, using a publicly available implementation in TensorFlow\footnote{\url{https://github.com/davidsandberg/facenet}}. As a result, the image of a face is transformed into a 128-dimensional vector: its projection or \textit{embedding}. This transformation is learned after a triplet-loss training process, which separates different faces as much as possible, while projecting similar faces as close as possible. As it can be seen on \autoref{fig:1_faces_poses}, this can be use to obtain similar projections when two images of the same face are evaluated, despite different lighting conditions (as a channel-wise normalization step is performed before passing the image through the network).
 	
 \end{enumerate}
 
@@ -191,7 +191,7 @@ To sum up, this ensemble of 3 neural networks provides a sequential pipeline to 
 \end{figure}
 
 
-Once the inference pipeline has been designed and implemented, we can take advantage of the optimization libraries present in the Jetson TX2 board, using TensorRT for this purpose. Using this library, several segments from the architecture of a given network can be modified according to certain parameters:
+Once the inference pipeline has been designed and implemented, it can take advantage of the optimization libraries present in the Jetson TX2 board, using TensorRT for this purpose. Using this library, several segments from the architecture of a given network can be modified according to certain parameters:
 
 \begin{description}
 	\item[MSS (\textit{Minimum Segment Size})] the threshold above which a segment is selected to be replaced by the TensorRT optimization. Increasing this value makes the optimizer more selective, in order to optimize only the heaviest segments of the network. A low value aims to optimize smaller segments, although this can cause an excessively high overhead, causing the resulting graph to run slower than the original one. 
@@ -207,7 +207,7 @@ The \textit{Camera} and \textit{Neural} components form the \textit{Perception} 
 
 \subsection{Actuation Module}
 
-The second module of the system addresses the actuation task: once the external stimuli have been acquired and processed, an action has to be performed in order to move the robot towards its goal. As the final objective of the system is to follow a person, these movements have to be reactive, happening as soon as possible whenever the person changes her position.\\
+The second module of the system addresses the actuation task: once the external stimuli have been acquired and processed, an action has to be performed in order to move the robot towards its goal. As the final objective of the system is to follow a person, these movements have to be reactive, happening as soon as possible whenever the person changes their position.\\
 
 \subsubsection{Motion Tracker}
 
@@ -334,7 +334,7 @@ On the same way, a detection has to be maintained during $P$ frames to be joined
 
 
 \subsubsection{PID Controllers}
-The combination of the described systems results in a efficient way to detect and identify the person to be followed, and additionally, track her movements on a fast way between slower detections.\\
+The combination of the described systems results in a efficient way to detect and identify the person to be followed, and additionally, track their movements on a fast way between slower detections.\\
 
 The last block of the system is responsible of  translating this location information of the reference person into velocity commands that move the robot towards an \textit{acceptable position} with respect to the person, where certain conditions are fulfilled.\\
 
@@ -363,7 +363,7 @@ These regions, which are completely tunable using the configuration file, can be
 To place the person inside these safe zones, the robot has to move on certain directions. For determining a movement, an \textit{error} vector ($e_x, e_w$) is computed, using the tracked person coordinates:
 
 \begin{description}
-	\item[$e_x$:] the linear error or \textit{range} is computed using the depth image, estimating the distance from the robot to the person. As the Xtion sensor registers the depth image into the RGB one, the person coordinates can be used in the depth image in order to find the distance of each pixel inside the bounding box of the reference person: the \textit{person depth map}. As it is feasible that the box contains an important region of the background (specially if the person opens her arms, as the neural detection will encompass the entire body), the edges of the depth map are trimmed. Later, a 10x10 grid is computed to have 100 uniformly distributed samples of the depth of the person. In order to ensure that the background does not affect the range measurement, the median value is computed, as even if some outlier points belong to the background, they would have to make up the 50\% of the sampled set to deviate the measurement from the true range.
+	\item[$e_x$:] the linear error or \textit{range} is computed using the depth image, estimating the distance from the robot to the person. As the Xtion sensor registers the depth image into the RGB one, the person coordinates can be used in the depth image in order to find the distance of each pixel inside the bounding box of the reference person: the \textit{person depth map}. As it is feasible that the box contains an important region of the background (specially if the person opens their arms, as the neural detection will encompass the entire body), the edges of the depth map are trimmed. Later, a 10x10 grid is computed to have 100 uniformly distributed samples of the depth of the person. In order to ensure that the background does not affect the range measurement, the median value is computed, as even if some outlier points belong to the background, they would have to make up the 50\% of the sampled set to deviate the measurement from the true range.
 	
 	\item[$e_w$:] the angular error can be computed taking into account that if the robot and the person are aligned, its bounding box will be horizontally placed near the center of the image. Therefore, an error metric can be extracted computing the difference on the horizontal coordinate between the image center and the center of the bounding box of the reference person.
 \end{description}
@@ -435,7 +435,7 @@ This equation can be split into the three components:
 	\label{fig:2_pids}		 	
 \end{figure}
 
-Each contribution is parameterized by its corresponding constant ($k_p, k_i, k_d$), so a task to perform is to find the optimum value for each one of them. Visual assessments of the robot stability under different combinations lead to the values present in \autoref{tab:2_pids}, which yielded a steady behavioral of the robot when it is subject to typical indoor conditions of following a person wandering. As previous parameters, these values can be changed using the configuration file.
+Each contribution is parameterized by its corresponding constant ($k_p, k_i, k_d$), so a task to perform is to find the optimum value for each one of them. Visual assessments of the robot stability under different combinations lead to the values present in \autoref{tab:2_pids}, which yielded a steady behavior of the robot when it is subject to typical indoor conditions of following a person wandering. As previous parameters, these values can be changed using the configuration file.
 
 \begin{table}[h]
 	\centering
@@ -458,12 +458,12 @@ This last block completes the functional architecture of the full following syst
 
 The developed software puts all the previous components together, offering two application modes:
 \begin{description}
-	\item[\texttt{followperson} mode:] this is the default behavioral of the system. When running on this mode, the program feeds the tracker and the neural pipeline with images from the ASUS Xtion, and sends the velocity commands to the robot, writing them into the specified ROS topic.
+	\item[\texttt{followperson} mode:] this is the default functionality of the system. When running on this mode, the program feeds the tracker and the neural pipeline with images from the ASUS Xtion, and sends the velocity commands to the robot, writing them into the specified ROS topic.
 	
 	\item[\texttt{benchmark} mode:] this mode is designed to test the entire infrastructure, with the purpose of tuning parameters or extracting objective metrics for comparisons, such as precision, or inference time. The images are read from a previously recorded ROSBag, emulating the Xtion sensor and providing always the same RGBD sequence to be fed in different implementations, allowing to compare the performance of different configurations under identical conditions. On this mode, the velocity commands are not sent to the robot, just drawn in the output image (\autoref{fig:2_output_image}), which is also saved into an output video for later visualization. Aside of the video, execution graphs and YAML\footnote{YAML is a plain-text data serialization format. It has been chosen as a standard format on this project as it offers a good tradeoff between serialization (allowing the data to be converted back into data structures in Python) and  readability of the file without processing it.} files are stored containing information about the tracked persons and times for each frame processed by the \texttt{Main} thread.
 \end{description}
 
-This behavioral, and other parameters, can be configured on the program execution without modifying the source code. The program receives a YAML configuration file specifying all the required parameters in order to run the system:
+This behavior, and other parameters, can be configured on the program execution without modifying the source code. The program receives a YAML configuration file specifying all the required parameters in order to run the system:
 
 \begin{lstlisting}
 NodeName: "followperson"
@@ -521,7 +521,7 @@ The previously depicted structure can be implemented on the Jetson board using t
 	\item[ROSCam:] this component, responsible of fetching the images from the source (a ROSBag or the Xtion camera, as explained before) is not deployed as a thread. However, as it works by means of subscribers when a synchronous mode is required (thus, when the source is the Xtion camera), the ROS API for Python, \texttt{rospy} automatically deploys these subscribers on independent threads.
 \end{description}
 
-This software architecture can be seen in \autoref{fig:2_software_architecture}, where the behavioral interaction between the threads can be visualized. The \texttt{Main} thread varies its behavior depending on the configured mode (\texttt{followperson}/\texttt{benchmark}), whereas the rest of threads  behave similarly in both configurations.
+This software architecture can be seen in \autoref{fig:2_software_architecture}, where the interaction behavioral  between the threads can be visualized. The \texttt{Main} thread varies its behavior depending on the configured mode (\texttt{followperson}/\texttt{benchmark}), whereas the rest of threads  behave similarly in both configurations.
 
 \begin{figure}[h]
 	\centering

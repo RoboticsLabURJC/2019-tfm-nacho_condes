@@ -1,5 +1,5 @@
 \chapter{Discussions}
-
+\label{chap:4_discussions}
 
 \section{Interpretation of the results}
 The previous chapter described the conducted experiments in order to build the system taking decisions based on objective criterion. On this section, the obtained results will be interpreted, explaining their influence on the choices that have been made for obtaining the final proposal.\\
@@ -50,7 +50,7 @@ Additionally, while the neural pipeline runs on the GPU of the board, the Lucas-
 
 \subsection{Global system results}
 
-The full system can be seen in action on the recorded video sample available online\footnote{\url{https://www.youtube.com/watch?v=WZ0riKMwJWA}}. This video presents a sequence of the robot following the typical use case: the reference person enters into the field of view of the robot, showing her face to the camera. After some consecutive frames detecting the person, it is identified using the detected face. When its projection is close enough to the reference one, the robot starts following the person. For each frame, the linear and angular errors are computed, even if the face of the person is not seen anymore, as the system has checked previously that the person has to be followed. If the errors are outside the safe zones, a velocity command is computed and sent to the robot. This routine is executed iteratively until the person gets lost, causing the robot to stop waiting for the person to be seen again.
+The full system can be seen in action on the recorded video sample available online\footnote{\url{https://www.youtube.com/watch?v=WZ0riKMwJWA}}. This video presents a sequence of the robot following the typical use case: the reference person enters into the field of view of the robot, showing their face to the camera. After some consecutive frames detecting the person, it is identified using the detected face. When its projection is close enough to the reference one, the robot starts following the person. For each frame, the linear and angular errors are computed, even if the face of the person is not seen anymore, as the system has checked previously that the person has to be followed. If the errors are outside the safe zones, a velocity command is computed and sent to the robot. This routine is executed iteratively until the person gets lost, causing the robot to stop waiting for the person to be seen again.
 
 
 
