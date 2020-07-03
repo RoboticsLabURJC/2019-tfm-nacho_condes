@@ -1,8 +1,11 @@
 \chapter{Discussions}
 \label{chap:4_discussions}
 
+On this last chapter, the results obtained in the \autoref{chap:3_results} experiments are analyzed, extracting the conclusions that have led to the final implemented design, that can be seen working on \autoref{sec:3_global_experiment}. Later, the objectives summarized on \autoref{sec:1_objectives} are individually revisited, analyzing the degree of accomplishment of the solution on each one of them. Additionally, suggestions are made for further improvements in future works, that can address the drawbacks of the solution proposed in this dissertation.
+
+
 \section{Interpretation of the results}
-The previous chapter described the conducted experiments in order to build the system taking decisions based on objective criterion. On this section, the obtained results will be interpreted, explaining their influence on the choices that have been made for obtaining the final proposal.\\
+The previous chapter described the conducted experiments in order to build the system taking decisions based on objective criterion. On this section, the obtained results will be interpreted, explaining their influence on the choices that have been made for obtaining the final proposal.
 
 \subsection{Person detection results}
 
@@ -16,7 +19,7 @@ Another important component in the neural pipeline is the face detection network
 Hence, this test validates the improvement of the face detection performance when using a specific neural network trained for that purpose.
 
 \subsection{Face recognition results}
-The last component of the neural pipeline, the FaceNet face encoder, was tested as well on \autoref{sec:3_test4}, where the euclidean distances of the projections of two faces were compared to a reference face, corresponding to an external picture of one of them, the \textit{reference face} (\autoref{fig:3_test4_refface}). The results obtained on \autoref{fig:3_test4_result} allows to extract two conclusions about the quality of the projections of the faces:
+The last component of the neural pipeline, the FaceNet face encoder, was tested as well on \autoref{sec:3_test4}, where the euclidean distances of the projections of two faces were compared to the projection obtained from an external picture of one of them, the \textit{reference face} (\autoref{fig:3_test4_refface}). The results obtained on \autoref{fig:3_test4_result} allows to extract two conclusions about the quality of the projections of the faces:
 
 \begin{itemize}
 	\item The encodings of the reference person (the person with the same face than the reference one) have an overall remarkable stability. In average, the obtained projections for every frame are located at an approximate distance of $1.1$ (threshold chosen for accepting a person as the reference one). Exceptional rises in the distance can be found as well, but they are due to changes in the pose of the face, that reduce the quality of the projection.\\
@@ -53,7 +56,7 @@ Additionally, while the neural pipeline runs on the GPU of the board, the Lucas-
 The full system can be seen in action on the recorded video sample available online\footnote{\url{https://www.youtube.com/watch?v=WZ0riKMwJWA}}. This video presents a sequence of the robot following the typical use case: the reference person enters into the field of view of the robot, showing their face to the camera. After some consecutive frames detecting the person, it is identified using the detected face. When its projection is close enough to the reference one, the robot starts following the person. For each frame, the linear and angular errors are computed, even if the face of the person is not seen anymore, as the system has checked previously that the person has to be followed. If the errors are outside the safe zones, a velocity command is computed and sent to the robot. This routine is executed iteratively until the person gets lost, causing the robot to stop waiting for the person to be seen again.
 
 
-
+\newpage
 \section{Conclusions}
 
 This section revisits the objectives stated in \autoref{sec:1_objectives}, and reviews the degree of accomplishment of each one of them\\

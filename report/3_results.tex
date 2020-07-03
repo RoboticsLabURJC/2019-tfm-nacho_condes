@@ -3,7 +3,9 @@
 
 This chapter describes the different experiments and benchmarks applied to the proposed system and its subsystems. These test have the purpose of taking design or implementation decisions, selecting the best choices to measure the achieved performance, accuracy and robustness of the final system and subsystems. For this purpose, several video sequences were recorded with the ASUS Xtion inside ROSBag files. This way, the same video can be used to assess the performance of different configurations, ensuring that the results will not be affected by external variability due to different environmental conditions on the test data.\\
 
-The majority of the tests described below for the neural pipeline measure the IoU score, which determines the overlapping quality between two bounding boxes. Thus, it is required to label the video sequences, specifying on each frame the location of the ground truth labels for every video. For this purpose, the tool LabelMe \cite{labelme} was used to provide the labels to the video, creating a JSON file for each frame of the video sequence. A screenshot of this tool is shown on \autoref{fig:3_labelme}.
+The majority of the tests described below for the neural pipeline measure the IoU score, which determines the overlapping quality between two bounding boxes. Thus, it is required to label the video sequences, specifying on each frame the location of the ground truth labels for every video. For this purpose, the tool LabelMe \cite{labelme} was used to provide the labels to the video, creating a JSON file for each frame of the video sequence. A screenshot of this tool is shown on \autoref{fig:3_labelme}.\\
+
+The source code of the experiments conducted below can be found in a separate \texttt{experiments} branch of the source repository on GitHub\footnote{\url{https://github.com/RoboticsLabURJC/2017-tfg-nacho_condes/tree/experiments}}, hosting both the testing and plotting source files, as well as the CSV files containing the data plotted in the figures below.
 
 
 \begin{figure}[h]
@@ -18,7 +20,7 @@ The majority of the tests described below for the neural pipeline measure the Io
 \label{sec:3_test1}
 This experiment compares the two detection architectures implemented on this system: YOLO \cite{yolov3} and SSD\cite{ssd}.
 
-In the case of YOLO, the implemented architecture is YOLOv3, in its \textit{tiny} version. This is due to the memory constraints of the Jetson board where the models are loaded. The available memory (8 GB) has to be shared among TensorFlow and the rest of processes, causing the more memory-intensive models to fail on loading. The YOLOv3 demands too much memory, making impossible to use it properly. Thus, the chosen architecture is a lighter one, publicly available on the YOLO website\footnote{\url{https://pjreddie.com/darknet/yolo/}}: the Tiny YOLOv3 model.
+In the case of YOLO, the implemented architecture is YOLOv3, in its \textit{tiny} version. This is due to the memory constraints of the Jetson board where the models are loaded. The available memory (8 GB) has to be shared among TensorFlow and the rest of processes, causing the more memory-intensive models to fail on loading. The YOLOv3 full model demands too much memory, making impossible to use it properly on the Jetson TX2 board. Thus, the chosen architecture is a lighter one, publicly available on the YOLO website\footnote{\url{https://pjreddie.com/darknet/yolo/}}: the Tiny YOLOv3 model.
 
 On the other hand, as it was explained in \autoref{sec:1_sota}, on a real-time application the most convenient variant of the SSD-based detectors is the one that uses a MobileNet \cite{mobilenet} as a feature extraction network. The TensorFlow Model Zoo \cite{model_zoo} offers several pre-trained models implementing this network, along which a selection has been carried out (as it will be depicted in other tests). The chosen model integrates a MobileNetv1 whose weights have been quantized \cite{ssd_quantization} in order to reduce the computational cost without reducing the accuracy.\\
 
@@ -48,10 +50,9 @@ In order to quantify the different accuracy vs. inference time tradeoffs that th
 
 
 
-
 \begin{figure}[h]
 	\centering
-	\includegraphics[width=\linewidth]{test1}
+	\includegraphics[width=0.9\linewidth]{test1}
 	\caption{Results of the person detection test: IoU score with ground truth(left) and inference time per frame (right).}
 	\label{fig:3_test1_results}
 \end{figure}
@@ -59,9 +60,9 @@ In order to quantify the different accuracy vs. inference time tradeoffs that th
 \section{Face detection experiments}
 \label{sec:3_test2}
 
-One of the improvements of the proposed system over the previous work \cite{tfg} is the utilization of a fully neural detection pipeline, as it was depicted on \autoref{chap:2_materials_methods}. This requires the replacement of the face detection Haar cascade classifier explained on \autoref{sec:1_sota} by a neural alternative: \textit{faced}. This experiment is devoted to compare the performance of both face detection systems.\\
+One of the improvements of the proposed system over the previous work \cite{tfg} is the utilization of a fully neural detection pipeline, as it was depicted on \autoref{chap:2_materials_methods}. This requires the replacement of the face detection Haar cascade classifier explained on \autoref{sec:1_sota} by a neural alternative: \textit{faced}.\\
 
-Its design is similar to the previous experiment, using the same video sequence (\autoref{fig:3_test1_frames}) with the ground truth faces labeled using LabelMe. For each frame in the sequence, the faces are extracted using each one of the described methods, and the IoU score is computed with the ground truth face bounding box. The result can be visualized in \autoref{fig:3_test2_results}.
+ This experiment is devoted to compare the performance of both face detection systems. Its design is similar to the previous experiment, using the same video sequence (\autoref{fig:3_test1_frames}) with the ground truth faces labeled using LabelMe. For each frame in the sequence, the faces are extracted using each one of the described methods, and the IoU score is computed with the ground truth face bounding box. The result can be visualized in \autoref{fig:3_test2_results}.
 
 \begin{figure}[h]
 	\centering
@@ -136,7 +137,7 @@ For computing the distance, the reference face was set using the image on \autor
 \label{sec:3_grid_trt}
 On \autoref{sec:2_functional_architecture}, the TensorRT engine was introduced. This engine is used to optimize, using a binding component between TensorFlow network graphs and TensorRT itself, the deployment of a neural network on a compatible NVIDIA GPU. There are several tunable parameters for customizing the implementation, and the most relevant ones are described in \autoref{sec:2_functional_architecture} as well. As varying these parameters changes the model size and the inference time, a benchmark has been developed in order to test the inference time of each model. The optimization script performs a grid search between a set of values for each parameter (MSS, MCE and precision mode, as described on \autoref{sec:2_functional_architecture}), and tests the performance on a specific ROSBag sequence, storing the detections and the inference times on a YAML file, besides the optimized graph to be loaded without requiring to perform the optimization again.\\
 
-The inference times for the fastest SSD-based model and the Tiny YOLOv3 implementations are shown below in \autoref{tab:3_ssd_trt_results} and \autoref{tab:3_yolo_trt_results}. The performance tables for the rest of models `can be found in \autoref{chap:annexes}.
+The inference times for the fastest SSD-based model and the Tiny YOLOv3 implementations are shown below in \autoref{tab:3_ssd_trt_results} and \autoref{tab:3_yolo_trt_results}. The performance tables for the rest of models can be found in \autoref{chap:annexes}.
 
 
 \begin{table}[]
@@ -216,6 +217,7 @@ The inference times for the fastest SSD-based model and the Tiny YOLOv3 implemen
 	\label{tab:3_yolo_trt_results}
 \end{table}
 
+\vspace{5cm}
 \subsection{Optimized graphs vs. standard graphs}
 
 \label{sec:3_test3}
@@ -278,7 +280,7 @@ A correctly tuned tracker maintains the detection and moves the bounding box for
 
 
 \section{Global system experiments}
-
+\label{sec:3_global_experiment}
 Finally, a visual assessment can be derived from a sample of the fully functional system\footnote{\url{https://www.youtube.com/watch?v=WZ0riKMwJWA}}. As it can be seen on \autoref{fig:3_testfull_frames}, the behavior followed by the robot is the expected one.
 
 \begin{figure}[h]
