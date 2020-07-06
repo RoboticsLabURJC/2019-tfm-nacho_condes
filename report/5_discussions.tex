@@ -1,0 +1,35 @@
+\chapter{Discussions}
+\label{chap:5_discussions}
+
+On this last chapter, the objectives summarized on Section \ref{sec:1_objectives} are individually revisited, analyzing the degree of accomplishment of the solution on each one of them. Additionally, suggestions are made for further improvements in future works, that can address the drawbacks of the solution proposed in this dissertation.
+
+
+\section{Conclusions}
+\label{sec:5_conclusions}
+This section revisits the objectives stated in Section  \ref{sec:1_objectives}, and reviews the degree of accomplishment of each one of them.\\
+
+Regarding the first objective, this work has focused on the development and testing of an embedded system that follows a reference person in a robust way, relying on the robustness of deep learning for being capable of working in real environments. This project has been developed using an affordable educational robot and a consumer RGBD sensor.\\
+
+As the second objective requires, the detection and recognition pipeline has been exclusively designed using deep neural networks, ensuring a robust performance in non-controlled environments. As it has been seen along the project description, this robustness is crucial, especially because the camera is located at a very low position: the lens has an vertical inclination in order to see the full body of the persons in front of the robot. However, this causes as well an excessive amount of light from ceiling lamps to enter into the camera, dimming the persons on the image (\autoref{fig:1_light_ko}). As it has been tested in Chapter \ref{chap:4_results}, classical systems tend to fail given this issue.\\
+
+
+This neural pipeline has been complemented by a tracking component, improving the performance under certain issues, such as partial occlusions, or a higher inference time. This could happen if the networks are more complex or the inference device does not provide a low detection time. This fulfills the third objective of the project.\\
+
+\newpage
+\section{Future lines}
+However, further improvements can be addressed on future works, for example:
+
+\begin{itemize}
+	\item Implement a multimodal tracking using sensor fusion, like in works such as \cite{rgbd_tracking}. The depth data of the person also provides information about their position, and bringing this information into the tracker can potentially lead to a better performance.
+	
+	\item Implement a probabilistic tracker, such as an EKF (\textit{Extended Kalman Filter}), relying on the person trajectory. This approach may avoid confusions between two persons if they cross each other, or help the system to follow the trajectory of a person even if it is temporarily lost. In addition, this can solve problems coming from using optical flow, such as a person moving a part of their body. The displacement of the keypoints on that part of the body cause the full bounding box to suffer a displacement even if the person has not changed its position. This can be addressed using probabilistic subsystems to predict the movement of the person.
+		
+	\item Add a navigation component to the robot. The used robot is additionally equipped with a laser scanner, it can be used to detect possible obstacles between the robot and the person. Thus, a simple planning algorithm such as VFF (\textit{Virtual Force Field}) can be combined with this system in order to avoid collisions while the robot is moving.
+\end{itemize}
+
+
+
+
+
+
+

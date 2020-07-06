@@ -51,6 +51,7 @@ hmargin=3cm
 \usepackage[super]{nth}
 \usepackage{txfonts} 
 \usepackage[T1]{fontenc}
+
 \usepackage[utf8]{inputenc}
 
 \usepackage[english]{babel} 
@@ -277,6 +278,7 @@ hmargin=3cm
 \thispagestyle{empty}
 \mbox{}
 
+\pretolerance=10000 % evitar cortes de palabras
 %----------
 %	RESUMEN Y PALABRAS CLAVE
 %----------
@@ -286,7 +288,7 @@ hmargin=3cm
 \setcounter{page}{3}
 	% ESCRIBIR EL RESUMEN AQUÍ
 	
-	This project describes the development process of an embedded system capable of performing a reactive following of a person. It makes use of convolutional neural networks and probabilistic tracking for processing the perception acquired by a RGB-D camera. This input is processed in a NVIDIA Jetson TX2, an embedded System-on-Module (SoM). This device is capable of performing computationally demanding tasks onboard, coping with the complexity required to run a robust tracking and following algorithm. The full design is implemented on a robotic mobile base, which receives velocity commands from the board, intended to move towards the desired person.
+	This project describes the development process of an embedded system capable of performing a reactive following of a person. It makes use of convolutional neural networks and probabilistic tracking for processing the perception acquired by a RGBD camera. This input is processed in a NVIDIA Jetson TX2, an embedded SoM (\textit{System-on-Module}). This device is capable of performing computationally demanding tasks onboard, coping with the complexity required to run a robust tracking and following algorithm. The full design is implemented on a robotic mobile base, which receives velocity commands from the board, intended to move towards the desired person.
 	
 	\textbf{Keywords:}
 	% Escribir las palabras clave aquí
@@ -302,12 +304,24 @@ hmargin=3cm
 %----------
 %	DEDICATORIA
 %----------	
-\chapter*{Dedication}
-yes
+
+
 \setcounter{page}{5}
-	
-	% ESCRIBIR LA DEDICATORIA AQUÍ	
-		
+\newgeometry{voffset=-2.8cm,bottom=-0.6cm,textwidth=15cm}
+\chapter*{Dedication}
+La escritura de estas palabras cierra este capítulo en mi vida académica. Muchos meses de continua lucha me han traído, madrugada de estudio tras madrugada de estudio, hasta el final del camino, en el que puedo dar por terminada la consecución de este máster. Tengo que agradecer a muchas personas por todo el apoyo, material y emocional, que me han brindado durante este tiempo.\\
+
+Para empezar, a mis queridos compañeros, colegas y amigos del máster. Cuando todos llegamos aquí desde los rincones más diversos de España, la dificultad, y la calidad y calidez del grupo fomentaron que enseguida fuéramos una piña inquebrantable. Y salimos adelante pese a enfrentarnos a más momentos duros de lo que al principio estimábamos. Con humor, con fuerza y sobre todo con ese saber hacer que finalmente nos ha hecho superar esta etapa tan exigente pero a la vez tan satisfactoria: lo hemos conseguido.\\
+
+Además, les debo un profundo agradecimiento a mis tutores, Eduardo Perdices y Fernando Díaz, y sobre todo a José María Cañas, por cuánto se han volcado en este proyecto conmigo, en especial en esta última etapa de escritura para ayudarme a mantener el rigor y la calidad necesarios en este proyecto. Gracias por vuestra paciencia e involucración.\\
+
+También, por supuesto, a mis compañeros y amigos de AFC Ingenieros, que me han aguantado, ayudado y animado con este proyecto cada vez que me veían entrar al laboratorio con mi famoso robot y un puñado de cables para soldar una y otra vez, ``que esta era la buena''. Por otro lado, gracias a AFC Ingenieros como tal, por la enorme flexibilidad que me ha permitido compatibilizar mi empleo con el seguimiento regular del máster. Sin esa confianza y empatía, me habría sido imposible completarlo.\\
+
+Asimismo, quiero destacar  los ánimos y el cariño que me ha infundido la gente que me soporta cada día. Quiero agradecérselo a mis mejores amigos, Jose y Jorge, a mi banda (qué mal tocamos ¡pero qué bien lo pasamos!), a toda mi familia y en especial a mi abuela, que ha animado durante tantos meses a un nieto pegado a un ordenador, siempre con demasiadas cosas pendientes por terminar.\\
+
+Finalmente, y al igual que en entregas anteriores, sigo sin tener palabras para condensar el infinito cariño, comprensión, desahogo y empatía que mi pareja ha tenido conmigo. Almudena, aunque sé que te mueres de vergüenza por aparecer aquí, quiero dejar constancia de la pieza fundamental que eres en el rompecabezas de mi vida, de que este proyecto ha salido adelante respaldado por el gran aguante y entereza que has tenido las innumerables veces que nuestra relación se ha visto reducida a un eterno ``hoy no puedo, tengo que avanzar con el TFM''. Un millón de gracias a ti y a tu familia por haber sido mi fuente de fuerzas tantas veces sin ninguna reserva.
+
+\restoregeometry
 	\vfill
 	
 	\newpage %página en blanco o de cortesía
@@ -348,7 +362,6 @@ yes
 \newpage %página en blanco o de cortesía
 \thispagestyle{empty}
 \mbox{}
-\pretolerance=10000 % evitar cortes de palabras
 
 %----------
 %	TRABAJO
@@ -357,9 +370,10 @@ yes
 \pagenumbering{arabic} % numeración con números arábigos para el resto de la publicación	
 
 \include{1_introduction}
-\include{2_materials_methods}
-\include{3_results}
-\include{4_discussions}
+\include{2_state_of_the_art}
+\include{3_materials_methods}
+\include{4_results}
+\include{5_discussions}
 %----------
 %	BIBLIOGRAFÍA
 %----------	
